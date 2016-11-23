@@ -18,16 +18,22 @@ function getUrlsFromPage(jQuery) {
 
 function getAllUrls() {
     let urls = []
-    let res = request('GET', 'https://www.goodreads.com/review/list/20719991-hannu?utf8=%E2%9C%93&utf8=%E2%9C%93&shelf=to-read&title=hannu&per_page=100')
-    let $ = cheerio.load(res.getBody('utf8'))
-    urls = urls.concat(getUrlsFromPage($))
-    // TODO: while next...
+    let nextPath = '/review/list/20719991-hannu?shelf=to-read&per_page=100'
+    let $
+    while (nextPath) {
+        let res = request('GET', 'https://www.goodreads.com' + nextPath)
+        $ = cheerio.load(res.getBody('utf8'))
+        let pageUrls = getUrlsFromPage($)
+        urls = urls.concat(pageUrls)
+        console.info(`found ${pageUrls.length} urls (total ${urls.length})`)
+        nextPath = $('a.next_page').prop('href')
+    }
 
     return urls
 }
 
 const urls = getAllUrls()
-console.log('ALL URLS:')
+console.log(`\nALL ${urls.length} URLS:`)
 console.log(urls.join('\n'))
 
 console.log('\n\nBOOKS:\n')
