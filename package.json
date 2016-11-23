@@ -1,0 +1,16 @@
+{
+  "name": "goodreads-helmet-overdrive",
+  "version": "0.1.0",
+  "description": "List books in a GoodReads shelf that helmet.overdrive.com has",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "sleep": "^5.0.0",
+    "sync-request": "^3.0.1"
+  }
+}
